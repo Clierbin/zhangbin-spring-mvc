@@ -7,7 +7,7 @@
   <display-name>BN Web Application</display-name>
   <servlet>
     <servlet-name>bnmvc</servlet-name>
-    <servlet-class>com.zhangbin.spring.mvcframework.v1.BNDispatcherservlet</servlet-class>
+    <servlet-class>com.zhangbin.spring.mvcframework.v2.BNDispatcherservletV2</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>application.properties</param-value>

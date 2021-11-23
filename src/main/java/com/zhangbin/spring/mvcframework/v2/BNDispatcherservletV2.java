@@ -1,9 +1,6 @@
-package com.zhangbin.spring.mvcframework.v1;
+package com.zhangbin.spring.mvcframework.v2;
 
-import com.zhangbin.spring.mvcframework.annotition.BNAutowired;
-import com.zhangbin.spring.mvcframework.annotition.BNController;
-import com.zhangbin.spring.mvcframework.annotition.BNRequestMapping;
-import com.zhangbin.spring.mvcframework.annotition.BNService;
+import com.zhangbin.spring.mvcframework.annotition.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,7 +16,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.*;
 
-public class BNDispatcherservlet extends HttpServlet {
+public class BNDispatcherservletV2 extends HttpServlet {
     // 配置文件
     private Properties properties = new Properties();
 
@@ -58,10 +55,50 @@ public class BNDispatcherservlet extends HttpServlet {
             resp.getWriter().println("404 Not Mapping of Url!!!");
             return;
         }
+        // 方法的入参都可以取到
+
+        Map<String,Integer> parmIndex=new HashMap<>();
+        Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+        // 这只能把写到了自定义注解的形参找出来
+        for (int i = 0; i < parameterAnnotations.length; i++) {
+            Annotation[] parameterAnnotation = parameterAnnotations[i];
+            for (Annotation annotation : parameterAnnotation) {
+                if (annotation instanceof BNRequestParam){
+                    String value =((BNRequestParam) annotation).value();
+                    parmIndex.put(value,i);
+                }
+            }
+        }
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        for (int i = 0; i < parameterTypes.length; i++) {
+            Class<?> parameterType = parameterTypes[i];
+            if (parameterType == HttpServletRequest.class || parameterType == HttpServletResponse.class){
+                parmIndex.put(parameterType.getSimpleName(),i);
+            }
+        }
+        Object[] methodParm=new Object[parameterTypes.length];
         // 执行  从method 方法中找形参, 从reques 里边找入参
         Map<String, String[]> parameterMap = req.getParameterMap();
+        for (String reqParm : parameterMap.keySet()) {
+            String[] strings = parameterMap.get(reqParm);
+            String parmVale=Arrays.toString(strings)
+                    .replaceAll("\\[|\\]","")
+                    .replaceAll("\\s","");
+            Integer integer = parmIndex.get(reqParm);
+            //涉及到类型强制转换
+            methodParm[integer]=parmVale;
+        }
+
+        if (parmIndex.containsKey(HttpServletRequest.class.getSimpleName())){
+            Integer integer = parmIndex.get(HttpServletRequest.class.getSimpleName());
+            methodParm[integer]=req;
+        }
+        if (parmIndex.containsKey(HttpServletResponse.class.getSimpleName())){
+            Integer integer = parmIndex.get(HttpServletResponse.class.getSimpleName());
+            methodParm[integer]=resp;
+        }
         String beanName = getBeanName(method.getDeclaringClass().getSimpleName());
-        method.invoke(ioc.get(beanName), new Object[]{req, resp, parameterMap.get("name")[0]});
+        method.invoke(ioc.get(beanName), methodParm);
     }
 
     @Override
