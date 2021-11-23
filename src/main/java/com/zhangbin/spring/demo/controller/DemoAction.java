@@ -8,7 +8,6 @@ import com.zhangbin.spring.mvcframework.annotition.BNRequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @BNController
 @BNRequestMapping(url = "demo")
@@ -19,13 +18,9 @@ public class DemoAction {
 
 
     @BNRequestMapping(url = "/hello/request")
-    public void request(HttpServletRequest req, HttpServletResponse resp,
+    public String request(HttpServletRequest req, HttpServletResponse resp,
                           @BNRequestParam("name")String name){
-        demoService.doSomeThing();
-        try {
-            resp.getWriter().print("Hello,"+name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String s = demoService.doSomeThing();
+        return "Hello,"+name+"\n"+s;
     }
 }

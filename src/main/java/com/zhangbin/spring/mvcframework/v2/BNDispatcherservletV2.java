@@ -98,7 +98,9 @@ public class BNDispatcherservletV2 extends HttpServlet {
             methodParm[integer]=resp;
         }
         String beanName = getBeanName(method.getDeclaringClass().getSimpleName());
-        method.invoke(ioc.get(beanName), methodParm);
+        Object invoke = method.invoke(ioc.get(beanName), methodParm);
+        if (Objects.isNull(invoke)){return;}
+        resp.getWriter().print(invoke);
     }
 
     @Override

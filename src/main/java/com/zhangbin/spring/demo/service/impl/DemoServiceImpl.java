@@ -7,7 +7,8 @@ import com.zhangbin.spring.mvcframework.annotition.BNService;
 public class DemoServiceImpl implements DemoService {
 
     @Override
-    public void doSomeThing() {
+    public String doSomeThing() {
         System.out.println("DemoServiceImpl doSomeThing!!!");
+        return "Service return!";
     }
 }
