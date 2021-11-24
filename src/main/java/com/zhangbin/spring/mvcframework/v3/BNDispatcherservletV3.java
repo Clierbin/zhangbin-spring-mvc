@@ -153,42 +153,7 @@ public class BNDispatcherservletV3 extends HttpServlet {
 
 
 
-    private void initializableIoc() {
-        if (beanPathList.isEmpty()) {
-            return;
-        }
-        try {
-            for (String path : beanPathList) {
-                Class<?> clazz = Class.forName(path);
-                // 尝试去取 注解 里边的value
-                if (clazz.isAnnotationPresent(BNController.class)) {
-                    Object o = clazz.newInstance();
-                    String beanName = toLowerFirstCase(clazz.getSimpleName());
-                    ioc.put(beanName, o);
-                } else if (clazz.isAnnotationPresent(BNService.class)) {
-                    Object o = clazz.newInstance();
-                    BNService annotation = clazz.getAnnotation(BNService.class);
-                    String beanName = annotation.value();
-                    if ("".equals(beanName)) {
-                        beanName = toLowerFirstCase(clazz.getSimpleName());
-                    }
-                    ioc.put(beanName, o);
-                    for (Class interfaceClass : clazz.getInterfaces()) {
-                        // 如果有多个实现类
-                        if (ioc.containsKey(toLowerFirstCase(interfaceClass.getSimpleName()))) {
-                            throw new Exception("This bean name is exists!!");
-                        }
-                        String interfaceName = toLowerFirstCase(interfaceClass.getSimpleName());
-                        ioc.put(interfaceName, o);
-                    }
-                } else {
-                    continue;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private String toLowerFirstCase(String simpleName) {
         char[] chars = simpleName.toCharArray();
@@ -196,43 +161,5 @@ public class BNDispatcherservletV3 extends HttpServlet {
         return new String(chars);
     }
 
-    private void scanPackage(String scanPackage) {
-        // 通过scanPackage 转成文件地址 找到.class文件 通过className 反射生成类
-        URL resource = this.getClass().getClassLoader().getResource("/" + scanPackage.replaceAll("\\.", "/"));
-        if (Objects.isNull(resource)) {
-            return;
-        }
-        File files = new File(resource.getFile());
-        for (File file : files.listFiles()) {
-            // 如果file是文件夹 就递归
-            if (file.isDirectory()) {
-                scanPackage(scanPackage + "." + file.getName());
-            } else {
-                // 如果是.class
-                if (!file.getName().contains(".class")) {
-                    continue;
-                }
-                String beanPath = scanPackage + "." + file.getName().replace(".class", "");
-                beanPathList.add(beanPath);
-            }
-        }
-    }
 
-    private void readConfigurationFile(ServletConfig config) {
-        String contextConfigLocation = config.getInitParameter("contextConfigLocation");
-        InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(contextConfigLocation);
-
-        try {
-            properties.load(resourceAsStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        } finally {
-            try {
-                resourceAsStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
