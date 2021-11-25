@@ -77,7 +77,6 @@ public class BNDispatcherservlet extends HttpServlet {
         // 5, requestMapping Hanlder
         requestMappingHanlder();
 
-
         System.out.println("zb BNDispatcherServlet is init !!!");
     }
 
