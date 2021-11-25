@@ -126,7 +126,7 @@ public class BNDispatcherservlet extends HttpServlet {
                     BNAutowired annotation = field.getAnnotation(BNAutowired.class);
                     String beanName = annotation.value().trim();
                     if ("".equals(beanName)) {
-                        beanName = field.getName();
+                        beanName = field.getType().getName();
                     }
                     //代码在反射面前，那就是裸奔
                     //强制访问. 强吻
@@ -166,10 +166,10 @@ public class BNDispatcherservlet extends HttpServlet {
                     ioc.put(beanName, o);
                     for (Class interfaceClass : clazz.getInterfaces()) {
                         // 如果有多个实现类
-                        if (ioc.containsKey(getBeanName(interfaceClass.getSimpleName()))) {
+                        if (ioc.containsKey(getBeanName(interfaceClass.getName()))) {
                             throw new Exception("This bean name is exists!!");
                         }
-                        String interfaceName = getBeanName(interfaceClass.getSimpleName());
+                        String interfaceName = getBeanName(interfaceClass.getName());
                         ioc.put(interfaceName, o);
                     }
                 } else {

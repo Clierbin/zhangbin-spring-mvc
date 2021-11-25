@@ -76,8 +76,8 @@ public class BeanDefinitionReader {
                 }
                 beanDefinitions.add(createBeanDefinition(beanName, registryBeanClassName));
                 for (Class interfaceClass : clazz.getInterfaces()) {
-                    // 如果有多个实现类
-                    String interfaceName = toLowerFirstCase(interfaceClass.getSimpleName());
+                    // 如果有多个实现类 这报错报的莫名其妙啊
+                    String interfaceName = interfaceClass.getName();
                     if (beanDefinitions.stream().map(BNBeanDefinition::getBeanName).collect(Collectors.toList())
                             .contains(interfaceName)) {
                         throw new Exception("This bean name is exists!!"+interfaceName);

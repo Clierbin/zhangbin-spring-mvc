@@ -51,7 +51,7 @@ public class BNDefaultListableBeanFactory implements BNBeanFactory {
                     BNAutowired annotation = field.getAnnotation(BNAutowired.class);
                     String beanName = annotation.value().trim();
                     if ("".equals(beanName)) {
-                        beanName = field.getName();
+                        beanName = field.getType().getName();
                     }
                     //代码在反射面前，那就是裸奔
                     //强制访问. 强吻
