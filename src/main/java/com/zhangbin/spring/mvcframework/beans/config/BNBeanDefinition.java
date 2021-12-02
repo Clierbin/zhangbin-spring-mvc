@@ -20,4 +20,8 @@ public class BNBeanDefinition {
     public void setBeanClassName(String beanClassName) {
         this.beanClassName = beanClassName;
     }
+
+    public boolean isSingleton() {
+        return true;
+    }
 }

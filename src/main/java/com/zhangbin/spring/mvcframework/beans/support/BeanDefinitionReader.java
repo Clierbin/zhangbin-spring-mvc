@@ -101,4 +101,8 @@ public class BeanDefinitionReader {
         beanDefinition.setBeanClassName(beanClassName);
         return beanDefinition;
     }
+
+    public Properties getConfig() {
+        return this.contextConfig;
+    }
 }

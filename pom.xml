@@ -23,6 +23,12 @@
     </dependency>
     <!-- requied end -->
 
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -93,7 +99,7 @@
           <contextPath>/</contextPath>
           <connectors>
             <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-              <port>8080</port>
+              <port>8082</port>
             </connector>
           </connectors>
           <scanIntervalSeconds>0</scanIntervalSeconds>

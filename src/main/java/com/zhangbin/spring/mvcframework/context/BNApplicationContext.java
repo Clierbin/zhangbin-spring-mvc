@@ -7,6 +7,8 @@ import com.zhangbin.spring.mvcframework.beans.support.BeanDefinitionReader;
 import com.zhangbin.spring.mvcframework.core.BNBeanFactory;
 
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * 用户门面
@@ -29,6 +31,8 @@ public class BNApplicationContext implements BNBeanFactory {
 
             // 3、加载非延时加载的所有的Bean
             this.registry.doLoadInstance();
+
+            System.out.println("bean 初始化完成!!!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,5 +50,17 @@ public class BNApplicationContext implements BNBeanFactory {
 
     public List<BNBeanWrapper> getListBeanWrapper() {
         return this.registry.getBeanWrappers();
+    }
+
+    public int getBeanDefinitionCount() {
+        return this.registry.getBeanDefinitionCount();
+    }
+
+    public Set<String> getBeanDefinitionNames() {
+        return this.registry.getBeanDefinitionNames();
+    }
+
+    public Properties getconfig() {
+        return this.beanDefinitionReader.getConfig();
     }
 }
