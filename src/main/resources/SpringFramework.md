@@ -241,4 +241,4 @@ currentInterceptorIndex=-1
 
 
 ![Screenshot](MethodInvocation.proceed().png)
-![Screenshot](screenshot.png)
+![Screenshot](SpringAop.png)
