@@ -68,28 +68,29 @@ new ApplicationContext(config.getInitParameter("contextConfigLocation"))
 	- for循环遍历
 getBean
 
-		- 获取单例Bean
+        - 获取单例Bean
 getSingleton(beanName)
-		- 实例化Bean
+![Screenshot](getSingleton(beanName).png)
+        - 实例化Bean
 instantiateBean
 
-			- 放入到三级缓存
+            - 放入到三级缓存
 factoryBeanObjectCache
 
-		- 保存正在被创建的BeanName
+        - 保存正在被创建的BeanName
 singletonsCurrentlyInCreation.add(beanName);
-		- 创建BeaWrapper
+        - 创建BeaWrapper
 
-			- Object wrapperInstance
-			- Class<?> wrapperClass
+            - Object wrapperInstance
+            - Class<?> wrapperClass
 
-		- DI  填充Bean
+        - DI  填充Bean
 populateBean
 
-			- 递归调用getBean
+            - 递归调用getBean
 field.set(instance, getBean(beanName))
 
-		- 保存至一级缓存
+        - 保存至一级缓存
 this.singletonObjects.put(beanName, instance)
 
 ### 初始化mvc九大组件"initStrategies
@@ -117,5 +118,127 @@ bnView.read(modleAndView.getModle(), req, resp)
 	- 输出至前端
 resp.getWriter().write(stringBuilder.toString())
 
-## 自由主题
+## AOP
 
+### AOP配置的工具类
+AdvisedSupport
+
+- 初始化AOPConfig
+
+	- pointCut
+
+		- 切面正则
+
+	- aspectClass
+
+		- 切面类
+
+	- aspectBefore
+
+		- before
+
+	- aspectAfter
+
+		- after
+
+	- aspectAfterThrow
+
+		- afterThrow
+
+	- aspectAfterThrowingName
+
+		- afterThrowName
+
+- 需要被代理的类Class
+TargetClass
+- 需要被代理的类对象
+Target
+- 正则Pattern
+Pattern pointCutClassPattern
+- 需要被代理的类对象方法和切面方法List
+Map<Method, List<Object>> methodCache
+
+	- Before 方法执行前
+MethodBeforeAdviceInterceptor
+	- After 方法执行后
+AfterReturningAdviceInterceptor
+	- AfterThrow 方法出现异常后
+AspectJAfterThrowingAdvice
+
+### 代理类可以被代理
+pointCutMath()
+
+- 创建代理类
+proxyFactory.createAopProxy(config){
+AdvisedSupport
+}
+
+	- 根据代理类是否有接口
+targetClass.getInterfaces().length > 0
+	- CglibAopPorxy
+	- JdkDynamicAopProxy
+
+- JdkDynamicAopProxy.getProxy()
+
+	- Proxy.newProxyInstance(classLoader,
+this.advised.getTargetClass().getInterfaces(),this)
+	- 实现InvocationHandler
+当代理类方法被调用时
+执行invoke方法
+
+		- 1初始化
+MethodInvocation
+
+			- 代理类对象
+			- 被代理类对象
+			- 被代理类对象Class
+			- 被代理类对象method
+			- method参数args
+			- method需要被执行的
+代理方法List
+
+		- 2执行方法
+MethodInvocation.proceed()
+递归调用
+
+			- 1判断method是否有需要
+被执行的代理方法
+			- 2按顺序执行代理方法List
+
+				- 方法执行前
+MethodBeforeAdviceInterceptor
+
+					- before()
+MethodInvocation.proceed()
+
+				- 方法执行后
+AfterReturningAdviceInterceptor
+
+					- MethodInvocation.proceed()
+after()
+
+				- 方法有异常后
+AspectJAfterThrowingAdvice
+
+					- 
+
+
+try{
+     MethodInvocation.proceed()
+}catch(){
+         throw()
+}
+					- 这时候currentInterceptorIndex的大小已经等于list的size,执行method.invoke
+被代理类的的method方法调用
+
+			- 3当前拦截器索引
+currentInterceptorIndex=-1
+一直++
+
+## getSingleton(beanName)
+
+## MethodInvocation.proceed()
+
+
+![Screenshot](MethodInvocation.proceed().png)
+![Screenshot](screenshot.png)
