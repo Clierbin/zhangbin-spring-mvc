@@ -70,7 +70,7 @@ new ApplicationContext(config.getInitParameter("contextConfigLocation"))
 
         - 获取单例Bean
           getSingleton(beanName)
-          ![Screenshot](getSingleton(beanName).png)
+          ![Screenshot](src\main\resources\getSingleton(beanName).png)
         - 实例化Bean
           instantiateBean
 
@@ -240,5 +240,5 @@ currentInterceptorIndex=-1
 ## MethodInvocation.proceed()
 
 
-![Screenshot](MethodInvocation.proceed().png)
-![Screenshot](SpringAop.png)
+![Screenshot](src/main/resources/MethodInvocation.proceed().png)
+![Screenshot](src/main/resources/SpringAop.png)
