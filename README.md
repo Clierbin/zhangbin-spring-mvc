@@ -70,7 +70,7 @@ new ApplicationContext(config.getInitParameter("contextConfigLocation"))
 
         - 获取单例Bean
           getSingleton(beanName)
-          ![Screenshot](src\main\resources\getSingleton(beanName).png)
+          ![Screenshot](src/main/resources/getSingleton(beanName).png)
         - 实例化Bean
           instantiateBean
 
