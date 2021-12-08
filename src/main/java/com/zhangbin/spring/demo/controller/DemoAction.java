@@ -1,6 +1,6 @@
 package com.zhangbin.spring.demo.controller;
 
-import com.zhangbin.spring.demo.service.DemoService;
+import com.zhangbin.spring.demo.service.IDemoService;
 import com.zhangbin.spring.demo.service.IPlayService;
 import com.zhangbin.spring.mvcframework.annotition.BNAutowired;
 import com.zhangbin.spring.mvcframework.annotition.BNController;
@@ -10,8 +10,6 @@ import com.zhangbin.spring.mvcframework.webservlet.BNModleAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +18,7 @@ import java.util.Map;
 public class DemoAction {
 
     @BNAutowired
-    private DemoService demoService;
+    private IDemoService demoService;
 
     @BNAutowired
     private IPlayService iPlayService;
@@ -39,6 +37,19 @@ public class DemoAction {
         Map<String,Object> modle=new HashMap<>();
         modle.put("teacher",name);
         String data = iPlayService.doSomeThing(name);
+        modle.put("data", data);
+        modle.put("token", 123456);
+        modleAndView.setModle(modle);
+        return modleAndView;
+    }
+
+    @BNRequestMapping(url = "/hello/throw")
+    public BNModleAndView throwMethod(HttpServletRequest req, HttpServletResponse resp,
+                              @BNRequestParam("name")String name) throws Exception {
+        BNModleAndView modleAndView = new BNModleAndView("first");
+        Map<String,Object> modle=new HashMap<>();
+        modle.put("teacher",name);
+        String data = iPlayService.throwMethod(name);
         modle.put("data", data);
         modle.put("token", 123456);
         modleAndView.setModle(modle);

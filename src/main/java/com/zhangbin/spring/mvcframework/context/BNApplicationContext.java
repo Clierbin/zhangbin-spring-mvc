@@ -28,7 +28,7 @@ public class BNApplicationContext implements BNBeanFactory {
             List<BNBeanDefinition> BNBeanDefinitions = beanDefinitionReader.loadBeanDefinition();
             // 缓存所有的BNBeanDefinition
             this.registry.doRegistBeanDefinition(BNBeanDefinitions);
-
+            registry.setContextConfig(beanDefinitionReader.getConfig());
             // 3、加载非延时加载的所有的Bean
             this.registry.doLoadInstance();
 

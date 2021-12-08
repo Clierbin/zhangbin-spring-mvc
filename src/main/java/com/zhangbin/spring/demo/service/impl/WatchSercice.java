@@ -1,6 +1,5 @@
 package com.zhangbin.spring.demo.service.impl;
 
-import com.zhangbin.spring.demo.service.DemoService;
 import com.zhangbin.spring.demo.service.IPlayService;
 import com.zhangbin.spring.demo.service.IWatchSercice;
 import com.zhangbin.spring.mvcframework.annotition.BNAutowired;

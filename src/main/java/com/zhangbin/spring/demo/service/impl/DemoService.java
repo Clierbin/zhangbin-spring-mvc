@@ -1,10 +1,10 @@
 package com.zhangbin.spring.demo.service.impl;
 
-import com.zhangbin.spring.demo.service.DemoService;
+import com.zhangbin.spring.demo.service.IDemoService;
 import com.zhangbin.spring.mvcframework.annotition.BNService;
 
 @BNService
-public class DemoServiceImpl implements DemoService {
+public class DemoService implements IDemoService {
 
     @Override
     public String doSomeThing() {

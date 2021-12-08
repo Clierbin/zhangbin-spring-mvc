@@ -22,4 +22,12 @@ public class PlayService implements IPlayService {
         System.out.println("这是在业务方法中打印的：" + json);
         return json;
     }
+
+    @Override
+    public String throwMethod(String name) throws Exception {
+        if (1==1) {
+            throw new Exception("报错了!!!");
+        }
+        return null;
+    }
 }

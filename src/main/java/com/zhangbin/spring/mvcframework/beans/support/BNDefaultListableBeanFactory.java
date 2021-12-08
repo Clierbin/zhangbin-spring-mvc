@@ -1,6 +1,9 @@
 package com.zhangbin.spring.mvcframework.beans.support;
 
 import com.zhangbin.spring.mvcframework.annotition.BNAutowired;
+import com.zhangbin.spring.mvcframework.aop.config.ActiveConfig;
+import com.zhangbin.spring.mvcframework.aop.BNDefaultAopProxyFactory;
+import com.zhangbin.spring.mvcframework.aop.support.BNAdvisedSupport;
 import com.zhangbin.spring.mvcframework.beans.BNBeanWrapper;
 import com.zhangbin.spring.mvcframework.beans.config.BNBeanDefinition;
 import com.zhangbin.spring.mvcframework.core.BNBeanFactory;
@@ -10,7 +13,7 @@ import java.util.*;
 
 public class BNDefaultListableBeanFactory implements BNBeanFactory {
 
-
+    private Properties contextConfig;
     // 一级缓存 完成 依赖注入后的bean cache
     private Map<String, Object> singletonObjects = new HashMap<>();
     // 二级缓存 刚刚被反射创建生成的bean cache
@@ -118,6 +121,15 @@ public class BNDefaultListableBeanFactory implements BNBeanFactory {
         }
         Class<?> clazz = Class.forName(beanDefinition.getBeanClassName());
         Object instance = clazz.newInstance();
+
+        // AOP begin
+        BNAdvisedSupport BNAdvisedSupport =instanceAopConfig(beanDefinition);
+        BNAdvisedSupport.setTargetClass(clazz);
+        BNAdvisedSupport.setTarget(instance);
+        if (BNAdvisedSupport.pointCutMath()){
+            instance= BNDefaultAopProxyFactory.getProxy(BNAdvisedSupport).getProxy();
+        }
+        // AOP end
         //
         this.factoryBeanObjectCache.put(beanDefinition.getBeanName(), instance);
         this.factoryBeanObjectCache.put(clazz.getName(), instance);
@@ -125,6 +137,17 @@ public class BNDefaultListableBeanFactory implements BNBeanFactory {
             this.factoryBeanObjectCache.put(insterface.getName(), instance);
         }
         return instance;
+    }
+
+    private BNAdvisedSupport instanceAopConfig(BNBeanDefinition beanDefinition) {
+        ActiveConfig activeConfig = new ActiveConfig();
+        activeConfig.setPointCut(this.contextConfig.getProperty("pointCut"));
+        activeConfig.setAspectClass(this.contextConfig.getProperty("aspectClass"));
+        activeConfig.setBeforeMethod(this.contextConfig.getProperty("aspectBefore"));
+        activeConfig.setAfterMethod(this.contextConfig.getProperty("aspectAfter"));
+        activeConfig.setThrowMethod(this.contextConfig.getProperty("aspectAfterThrow"));
+        activeConfig.setAspectAfterThrowingName(this.contextConfig.getProperty("aspectAfterThrowingName"));
+        return new BNAdvisedSupport(activeConfig);
     }
 
     @Override
@@ -160,5 +183,12 @@ public class BNDefaultListableBeanFactory implements BNBeanFactory {
 
     public Set<String> getBeanDefinitionNames() {
         return beanDefinitionMap.keySet();
+    }
+    public String getProperty(String property) {
+        return contextConfig.getProperty(property);
+    }
+
+    public void setContextConfig(Properties contextConfig) {
+        this.contextConfig = contextConfig;
     }
 }

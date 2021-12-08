@@ -1,5 +1,5 @@
 package com.zhangbin.spring.demo.service;
 
-public interface DemoService {
+public interface IDemoService {
     String doSomeThing();
 }

@@ -40,7 +40,7 @@ public class BNDispatcherservletV4 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            doReal(req, resp);
+            doDispatch(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -56,7 +56,7 @@ public class BNDispatcherservletV4 extends HttpServlet {
         }
     }
 
-    private void doReal(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+    private void doDispatch(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         String requestURI = req.getRequestURI();
         if ("".equals(requestURI) || handlermappings.isEmpty()) {
             return;
@@ -64,7 +64,11 @@ public class BNDispatcherservletV4 extends HttpServlet {
         // 通过url 找到 handlermapping
         BNHandlerMapping handler = getHandler(req);
         if (handler==null){
+            if (req.getRequestURI().contains("favicon.ico")){
+                return;
+            }
             pressDispatchServlet(req, resp,new BNModleAndView("404"));
+            return;
         }
         // 通过handlingMapping 找到 HandlingAdapter
         BNHandlerAdapter ha = getAdapter(handler);
