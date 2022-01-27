@@ -29,6 +29,24 @@
       <artifactId>lombok</artifactId>
       <version>1.18.12</version>
     </dependency>
+    <!-- slf4j + logback: -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.12</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <!-- 实现lsf4j接口并整合 -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
   </dependencies>
 
   <build>
