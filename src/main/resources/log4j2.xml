@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration status="WARN">
+
+    <Properties> <!-- 配置日志文件输出目录，此配置将日志输出到工程目录下的log4j2_logs文件夹 -->
+        <Property name="LOG_HOME">
+            /export/log
+        </Property>
+        <Property name="APP_NAME">
+            APP_NAME
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <!--这个输出控制台的配置，即System.out -->
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch) . -->
+            <ThresholdFilter level="INFO" onMatch="ACCEPT"
+                             onMismatch="DENY"/>
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n"/>
+        </Console>
+
+
+        <!-- DEBUG级别日志 设置日志格式并配置日志压缩格式，压缩文件独立放在一个文件夹内， 日期格式不能为冒号，否则无法生成，因为文件名不允许有冒号，此appender只输出debug级别的数据到debug.log; -->
+        <RollingFile name="DEBUG" immediateFlush="true"
+                     fileName="${LOG_HOME}/${APP_NAME}_debug.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}_debug - %d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n</pattern>
+            </PatternLayout>
+            <Policies><!-- 每个日志文件最大2MB ; -->
+                <!--                <SizeBasedTriggeringPolicy size="1MB" />-->
+
+                <!-- 如果启用此配置，则日志会按文件名生成新压缩文件， 即如果filePattern配置的日期格式为 %d{yyyy-MM-dd HH}
+                    ，则每小时生成一个压缩文件， 如果filePattern配置的日期格式为 %d{yyyy-MM-dd} ，则天生成一个压缩文件 -->
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true"/>
+
+            </Policies>
+            <Filters><!-- 此Filter意思是，只输出debug级别的数据 -->
+                <ThresholdFilter level="info" onMatch="DENY"
+                                 onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- ERROR级别日志 设置日志格式并配置日志压缩格式，压缩文件独立放在一个文件夹内， 日期格式不能为冒号，否则无法生成，因为文件名不允许有冒号，此appender只输出debug级别的数据到debug.log; -->
+        <RollingFile name="ERROR" immediateFlush="true"
+                     fileName="${LOG_HOME}/${APP_NAME}_error.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}_error - %d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n</pattern>
+            </PatternLayout>
+            <Policies><!-- 每个日志文件最大2MB ; -->
+                <!--                <SizeBasedTriggeringPolicy size="1MB" />-->
+
+                <!-- 如果启用此配置，则日志会按文件名生成新压缩文件， 即如果filePattern配置的日期格式为 %d{yyyy-MM-dd HH}
+                    ，则每小时生成一个压缩文件， 如果filePattern配置的日期格式为 %d{yyyy-MM-dd} ，则天生成一个压缩文件 -->
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true"/>
+
+            </Policies>
+            <Filters><!-- 此Filter意思是，只输出debug级别的数据 -->
+                <ThresholdFilter level="error" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- INFO以上级别日志 -->
+        <RollingFile name="DETAIL" immediateFlush="true"
+                     fileName="${LOG_HOME}/${APP_NAME}_detail.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}_detail - %d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 如果启用此配置，则日志会按文件名生成新压缩文件， 即如果filePattern配置的日期格式为 %d{yyyy-MM-dd HH}
+                   ，则每小时生成一个压缩文件， 如果filePattern配置的日期格式为 %d{yyyy-MM-dd} ，则天生成一个压缩文件 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+        </RollingFile>
+
+
+    </Appenders>
+
+    <loggers>
+        <!--使appender生效-->
+        <!-- 配置日志的根节点 -->
+        <!-- 定义logger，只有定义了logger并引入了appender，appender才会生效 -->
+        <root level="debug">
+            <!-- 本地调试时打开 -->
+            <appender-ref ref="CONSOLE"/>
+
+            <appender-ref ref="DEBUG"/>
+            <appender-ref ref="DETAIL"/>
+            <appender-ref ref="ERROR"/>
+        </root>
+
+    </loggers>
+</configuration>

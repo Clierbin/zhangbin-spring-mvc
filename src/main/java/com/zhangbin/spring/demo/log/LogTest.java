@@ -1,17 +1,17 @@
 package com.zhangbin.spring.demo.log;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+@Slf4j
 public class LogTest {
-    final static Logger logger = LoggerFactory.getLogger(LogTest.class);
 
     public static void main(String[] args) {
-        logger.trace("6666");
-        logger.debug("6666");
-        logger.info("6666");
-        logger.warn("6666");
-        logger.error("6666");
+        log.trace("6666");
+        log.debug("6666");
+        log.info("6666");
+        log.warn("6666");
+        log.error("6666");
     }
 }

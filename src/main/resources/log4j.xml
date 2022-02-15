@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <property name="LOG_HOME" value="/export/log"/>
+    <property name="APP_NAME" value="APP_NAME"/>
+    <!-- 输出信息到控制台,用于开发调试 -->
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n"/>
+        </layout>
+        <!-- 日志过滤条件,输出哪些日志 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- OFF FATAL ERROR WARN INFO DEBUG TRACE ALL -->
+            <param name="levelMin" value="debug"/>
+            <param name="levelMax" value="error"/>
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+
+    <!-- 输出信息到文件,每天产生一个日志文件 -->
+    <appender name="DETAIL" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/export/log/${LOG_HOME}detail.log"/>
+        <!-- 追加日志 -->
+        <param name="Append" value="true"/>
+        <!-- 日志输出的最低等级 -->
+        <param name="Threshold" value="info"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 输出信息到文件,每天产生一个日志文件 -->
+    <appender name="DEBUG" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/export/log/debug.log"/>
+        <!-- 追加日志 -->
+        <param name="Append" value="true"/>
+        <!-- 日志输出的最低等级 -->
+
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="debug"/>
+            <param name="LevelMax" value="debug"/>
+        </filter>
+    </appender>
+
+    <!-- 输出信息到文件,每天产生一个日志文件 -->
+    <appender name="ERROR" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/export/log/error.log"/>
+        <!-- 追加日志 -->
+        <param name="Append" value="true"/>
+        <!-- 日志输出的最低等级 -->
+
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{1}%X{ServiceId} -%X{trace-id} %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="error"/>
+            <param name="LevelMax" value="error"/>
+        </filter>
+    </appender>
+
+    <root>
+        <level value="INFO"/>
+        <!-- 本地调试时打开 -->
+        <appender-ref ref="Console"/>
+        <appender-ref ref="DETAIL"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+</log4j:configuration>

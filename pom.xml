@@ -29,8 +29,8 @@
       <artifactId>lombok</artifactId>
       <version>1.18.12</version>
     </dependency>
-    <!-- slf4j + logback: -->
-    <dependency>
+    <!-- slf4j + logback: begin-->
+<!--    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.12</version>
@@ -40,13 +40,64 @@
       <artifactId>logback-core</artifactId>
       <version>1.1.1</version>
     </dependency>
-    <!-- 实现lsf4j接口并整合 -->
+    &lt;!&ndash; 实现lsf4j接口并整合 &ndash;&gt;
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.1.1</version>
+    </dependency>-->
+    <!-- slf4j + logback: end-->
+
+    <!-- slf4j + log4j: begin-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
     </dependency>
 
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <!-- slf4j + log4j: end-->
+
+    <!-- slf4j + log4j2: begin-->
+    <!-- slf4j核心包-->
+   <!-- <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+
+    &lt;!&ndash;slf4j对应log4j2的中间件,即桥接，告诉slf4j使用log4j2&ndash;&gt;
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.10.0</version>
+    </dependency>
+
+    &lt;!&ndash;log4j2核心包&ndash;&gt;
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.10.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.10.0</version>
+    </dependency>-->
+    <!-- slf4j + log4j2: end-->
   </dependencies>
 
   <build>
