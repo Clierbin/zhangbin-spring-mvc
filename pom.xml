@@ -30,21 +30,22 @@
       <version>1.18.12</version>
     </dependency>
     <!-- slf4j + logback: begin-->
-<!--    <dependency>
+  <!--  <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.12</version>
+      <version>1.7.32</version>
     </dependency>
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-core</artifactId>
-      <version>1.1.1</version>
+      <version>1.2.3</version>
     </dependency>
     &lt;!&ndash; 实现lsf4j接口并整合 &ndash;&gt;
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.1.1</version>
+      <version>1.2.3</version>
     </dependency>-->
     <!-- slf4j + logback: end-->
 
@@ -52,7 +53,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.25</version>
+      <version>1.7.32</version>
     </dependency>
 
 
@@ -75,7 +76,7 @@
    <!-- <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.25</version>
+      <version>1.7.32</version>
     </dependency>
 
     &lt;!&ndash;slf4j对应log4j2的中间件,即桥接，告诉slf4j使用log4j2&ndash;&gt;

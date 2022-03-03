@@ -3,7 +3,7 @@
 
     <Properties> <!-- 配置日志文件输出目录，此配置将日志输出到工程目录下的log4j2_logs文件夹 -->
         <Property name="LOG_HOME">
-            /export/log
+            /export/log/${APP_NAME}
         </Property>
         <Property name="APP_NAME">
             APP_NAME

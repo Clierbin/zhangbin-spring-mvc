@@ -3,8 +3,7 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
-    <property name="LOG_HOME" value="/export/log"/>
-    <property name="APP_NAME" value="APP_NAME"/>
+
     <!-- 输出信息到控制台,用于开发调试 -->
     <appender name="Console" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_HOME" value="/export/log"/>
-    <property name="APP_NAME" value="APP_NAME"/>
+    <property name="APP_NAME" value="test"/>
+    <property name="LOG_HOME" value="/export/log/${APP_NAME}"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>
@@ -35,7 +35,7 @@
             <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{0}%X{ServiceId} -%X{trace-id} %m%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/${APP_NAME}_debug_%d{yyyyMMdd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}_error_%d{yyyyMMdd}.log</fileNamePattern>
         </rollingPolicy>
     </appender>
     <appender name="DETAIL" class="ch.qos.logback.core.rolling.RollingFileAppender">
