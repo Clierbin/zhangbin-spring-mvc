@@ -123,11 +123,11 @@ public class BNDefaultListableBeanFactory implements BNBeanFactory {
         Object instance = clazz.newInstance();
 
         // AOP begin
-        BNAdvisedSupport BNAdvisedSupport =instanceAopConfig(beanDefinition);
-        BNAdvisedSupport.setTargetClass(clazz);
-        BNAdvisedSupport.setTarget(instance);
-        if (BNAdvisedSupport.pointCutMath()){
-            instance= BNDefaultAopProxyFactory.getProxy(BNAdvisedSupport).getProxy();
+        BNAdvisedSupport bNAdvisedSupport =instanceAopConfig(beanDefinition);
+        bNAdvisedSupport.setTargetClass(clazz);
+        bNAdvisedSupport.setTarget(instance);
+        if (bNAdvisedSupport.pointCutMath()){
+            instance= BNDefaultAopProxyFactory.getProxy(bNAdvisedSupport).getProxy();
         }
         // AOP end
         //
